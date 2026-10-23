@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans:
+        var(--font-barlow), ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-display:
+        var(--font-barlow-condensed), 'Arial Narrow', ui-sans-serif, sans-serif;
+
+    --radius-sm: 1px;
+    --radius-md: 2px;
+    --radius-lg: 3px;
+    --radius-xl: 4px;
+
+    --color-paper: var(--paper);
+    --color-sheet: var(--sheet);
+    --color-wash: var(--wash);
+    --color-ink: var(--ink);
+    --color-ink-muted: var(--ink-muted);
+    --color-rule: var(--rule);
+    --color-rule-strong: var(--rule-strong);
+    --color-clay: var(--clay);
+    --color-grass: var(--grass);
+    --color-warn: var(--warn);
+    --color-danger: var(--danger);
+    --color-board: var(--board);
+    --color-board-ink: var(--board-ink);
+    --color-board-rule: var(--board-rule);
+    --color-bulb: var(--bulb);
+    --color-brand: var(--brand);
+    --color-brand-ink: var(--brand-ink);
+
+    --color-background: var(--paper);
+    --color-foreground: var(--ink);
+    --color-card: var(--sheet);
+    --color-card-foreground: var(--ink);
+    --color-popover: var(--sheet);
+    --color-popover-foreground: var(--ink);
+    --color-primary: var(--ink);
+    --color-primary-foreground: var(--paper);
+    --color-secondary: var(--wash);
+    --color-secondary-foreground: var(--ink);
+    --color-muted: var(--wash);
+    --color-muted-foreground: var(--ink-muted);
+    --color-accent: var(--wash);
+    --color-accent-foreground: var(--ink);
+    --color-destructive: var(--danger);
+    --color-destructive-foreground: var(--danger);
+    --color-border: var(--rule);
+    --color-input: var(--rule-strong);
+    --color-ring: var(--clay);
+}
+
+/*
+ * Scorebook palette. Light is "day game" (ink on warm scorebook paper),
+ * dark is "night game" (chalk on a field under the lights). `--brand` is
+ * the platform clay by default and is overridden per organization.
+ */
+:root {
+    --paper: oklch(0.959 0.014 85);
+    --sheet: oklch(0.979 0.009 85);
+    --wash: oklch(0.925 0.018 85);
+    --ink: oklch(0.255 0.026 255);
+    --ink-muted: oklch(0.47 0.025 255);
+    --rule: oklch(0.86 0.016 240);
+    --rule-faint: oklch(0.86 0.016 240 / 0.45);
+    --rule-strong: oklch(0.7 0.02 240);
+    --clay: oklch(0.55 0.14 42);
+    --grass: oklch(0.44 0.08 150);
+    --warn: oklch(0.6 0.12 80);
+    --danger: oklch(0.5 0.16 28);
+    --board: oklch(0.24 0.03 255);
+    --board-ink: oklch(0.95 0.01 85);
+    --board-rule: oklch(0.36 0.03 255);
+    --bulb: oklch(0.84 0.14 80);
+    --brand: var(--clay);
+    --brand-ink: oklch(0.985 0.005 85);
+}
+
+.dark {
+    --paper: oklch(0.19 0.022 255);
+    --sheet: oklch(0.225 0.025 255);
+    --wash: oklch(0.27 0.025 255);
+    --ink: oklch(0.935 0.01 85);
+    --ink-muted: oklch(0.74 0.02 250);
+    --rule: oklch(0.34 0.025 250);
+    --rule-faint: oklch(0.34 0.025 250 / 0.5);
+    --rule-strong: oklch(0.48 0.025 250);
+    --clay: oklch(0.7 0.14 45);
+    --grass: oklch(0.72 0.11 150);
+    --warn: oklch(0.82 0.13 85);
+    --danger: oklch(0.7 0.16 28);
+    --board: oklch(0.145 0.02 255);
+    --board-rule: oklch(0.28 0.025 255);
+    --brand-ink: oklch(0.19 0.022 255);
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: 'tnum' 0;
+    }
+
+    ::selection {
+        background: color-mix(in oklch, var(--clay) 30%, transparent);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--clay);
+        outline-offset: 2px;
+    }
+}
+
+@utility font-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.005em;
+}
+
+/* Small uppercase display labels, like scorebook column headings. */
+@utility label-caps {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Faint horizontal rules, like a scorebook sheet. */
+@utility ruled {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 31px,
+        var(--rule-faint) 31px,
+        var(--rule-faint) 32px
+    );
+
+    @media (prefers-contrast: more) {
+        background-image: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
